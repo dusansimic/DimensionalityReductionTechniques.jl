@@ -41,9 +41,8 @@ end
 Return matrix X with reduced dimensions using the Achiloptas [achlioptas2001database](@cite) sparse
 matrix for random projection.
 
-The projection matrix for this method is generated using a very simple categorical distribution
-documented on the Wikipedia page for random projection techniques in section for sparse matrix based
-projections [wiki2024random](@cite)
+The projection matrix for this method is generated using a very simple and computationally efficient
+categorical distribution.
 
 ```math
 R_{i,j} = \\sqrt{3} \\times

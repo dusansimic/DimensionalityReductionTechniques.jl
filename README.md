@@ -10,6 +10,17 @@ of Sciences, University of Novi Sad.
 
 The whole library is a part of a final project for said course.
 
+## Build docs
+
+Documentation is created using Documenter and also requires DocumenterCitations since there are some
+cited reference in the docs. To build it run the `make.jl` file from `docs` directory with the
+`--project` option.
+
+```sh
+cd docs
+julia --project make.jl
+```
+
 ## License
 
 [BSD 2-clause](./LICENSE)
