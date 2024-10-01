@@ -26,6 +26,7 @@ jobs:
           julia --project=docs/ -e 'using Pkg; Pkg.activate("docs"); Pkg.instantiate()'
           julia --project=. -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
       - name: Build and deploy
+        working-directory: docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: julia --project=docs/ docs/make.jl
+        run: julia --project make.jl
