@@ -10,13 +10,12 @@ on:
 jobs:
   build:
     permissions:
-      actions: write
-      contents: write
-      pull-requests: read
-      statuses: write
+      contents: read
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: 'true'
       - uses: julia-actions/setup-julia@v2
         with:
           version: '1'
@@ -30,3 +29,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: julia --project make.jl
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build
+  deploy:
+    permissions:
+      pages: write
+    runs-on: ubuntu-22.04
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
