@@ -1,8 +1,8 @@
 # DimensionalityReductionTechniques.jl
 
-<center>
-  <img src="docs/src/assets/logo.webp" width="300px"></img>
-</center>
+<p align="center">
+  <img src="docs/src/assets/logo.webp" width="300px"/>
+</p>
 
 This library is intended to add various linear and non-linear dimensionality reduction techniques
 that are not currently implemented in other libraries.
