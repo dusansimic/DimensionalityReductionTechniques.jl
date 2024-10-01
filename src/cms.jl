@@ -20,3 +20,13 @@ function cms_projection(X::AbstractMatrix, k::Int64)
 end
 
 pcoa_projection = cms_projection
+
+mutable struct CMSProjection <: MLJBase.Unsupervised
+  dimension::TransformDimension
+end
+
+function MLJBase.fit(transformer::CMSProjection, d::Int64)
+  transformer.dimension = TransformDimension(d)
+end
+
+MLJBase.transform(transformer::CMSProjection, X) = transformation(transformer.dimension, cms_projection, X)

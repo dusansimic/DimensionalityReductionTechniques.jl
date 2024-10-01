@@ -21,6 +21,16 @@ export
   mds_projection,
   lle_projection
 
+export
+  GaussianRandomProjection,
+  AchiloptasRandomProjection,
+  SparseRandomProjection,
+  PCAProjection,
+  SVDProjection,
+  NMFProjection,
+  CMSProjection,
+  MDSProjection
+
 include("types.jl")
 include("common.jl")
 include("rp.jl")

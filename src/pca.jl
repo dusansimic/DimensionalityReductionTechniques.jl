@@ -29,3 +29,13 @@ function pca_projection(X::AbstractMatrix, k::Int64)
   proj = X_cent * V[:, sorted_λ_indices[1:k]]
   proj
 end
+
+mutable struct PCAProjection <: MLJBase.Unsupervised
+  dimension::TransformDimension
+end
+
+function MLJBase.fit(transformer::PCAProjection, d::Int64)
+  transformer.dimension = TransformDimension(d)
+end
+
+MLJBase.transform(transformer::PCAProjection, X) = transformation(transformer.dimension, pca_projection, X)

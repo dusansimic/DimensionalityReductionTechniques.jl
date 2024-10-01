@@ -13,20 +13,11 @@ function svd_projection(X::AbstractMatrix, k::Int64)
 end
 
 mutable struct SVDProjection <: MLJBase.Unsupervised
-  dimension::Int64
+  dimension::TransformDimension
 end
 
 function MLJBase.fit(transformer::SVDProjection, d::Int64)
-  transformer.dimension = d
+  transformer.dimension = TransformDimension(d)
 end
 
-function MLJBase.transform(transformer::SVDProjection, X)
-  n_features = Tables.schema(X).names |> collect |> length
-  dimension = transformer.dimension
-  if dimension == 0 || dimension > n_features
-    error("Reduced number of features cannot be zero or larger than current number of features.")
-  end
-
-  matrix = svd_projection(Tables.matrix(X), dimension)
-  Tables.table(matrix)
-end
+MLJBase.transform(transformer::SVDProjection, X) = transformation(transformer.dimension, svd_projection, X)

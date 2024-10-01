@@ -37,3 +37,15 @@ function mds_projection(X::AbstractMatrix, k::Int64; max_iter::Int64=500, tol::F
   X_reduced = reshape(result.minimizer, m, k)
   X_reduced
 end
+
+mutable struct MDSProjection <: MLJBase.Unsupervised
+  dimension::TransformDimension
+  iteration_config::TransformIterationConfig
+end
+
+function MLJBase.fit(transformer::MDSProjection, d::Int64; max_iter::Int64=500, tol::Int64=1e-4)
+  transformer.dimension = TransformDimension(d)
+  transformer.iteration_config = TransformIterationConfig(max_iter, tol)
+end
+
+MLJBase.transform(transformer::MDSProjection, X) = transformation(transformer.dimension, transformer.iteration_config, mds_projection, X)

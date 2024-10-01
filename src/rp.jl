@@ -23,6 +23,16 @@ function gaussian_random_projection(X::AbstractMatrix, k::Int64)
   X * R
 end
 
+mutable struct GaussianRandomProjection <: MLJBase.Unsupervised
+  dimension::TransformDimension
+end
+
+function MLJBase.fit(transformer::GaussianRandomProjection, d::Int64)
+  transformer.dimension = TransformDimension(d)
+end
+
+MLJBase.transform(transformer::GaussianRandomProjection, X) = transformation(transformer.dimension, gaussian_random_projection, X)
+
 function __sparse_matrix_random_projection(d::Distributions.DiscreteNonParametric, X::AbstractMatrix, k::Int64)
   _, dX = size(X)
 
@@ -58,6 +68,16 @@ achiloptas_random_projection(X::AbstractMatrix, k::Int64) = __sparse_matrix_rand
   X,
   k,
 )
+
+mutable struct AchiloptasRandomProjection <: MLJBase.Unsupervised
+  dimension::TransformDimension
+end
+
+function MLJBase.fit(transformer::AchiloptasRandomProjection, d::Int64)
+  transformer.dimension = TransformDimension(d)
+end
+
+MLJBase.transform(transformer::AchiloptasRandomProjection, X) = transformation(transformer.dimension, achiloptas_random_projection, X)
 
 """
     sparse_random_projection(X::AbstractMatrix, k::Int64, density::Union{Float64,Nothing}=nothing)
@@ -95,3 +115,13 @@ function sparse_random_projection(X::AbstractMatrix, k::Int64, density::Union{Fl
 
   __sparse_matrix_random_projection(d, X, k)
 end
+
+mutable struct SparseRandomProjection <: MLJBase.Unsupervised
+  dimension::TransformDimension
+end
+
+function MLJBase.fit(transformer::SparseRandomProjection, d::Int64)
+  transformer.dimension = TransformDimension(d)
+end
+
+MLJBase.transform(transformer::SparseRandomProjection, X) = transformation(transformer.dimension, achiloptas_random_projection, X)
